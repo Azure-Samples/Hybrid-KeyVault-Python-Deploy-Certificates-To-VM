@@ -10,18 +10,17 @@ This sample explains how you can create a VM in Python, with certificates instal
 
 ## Getting Started
 
-
 ### Installation
 
-1.  If you don't already have it, [install Python](https://www.python.org/downloads/).
+1. If you don't already have it, [install Python](https://www.python.org/downloads/).
 
     This sample (and the SDK) is compatible with Python 2.7, 3.4, 3.5, 3.6 and 3.7.
 
-1.  We recommend that you use a [virtual environment](https://docs.python.org/3/tutorial/venv.html)
+1. We recommend that you use a [virtual environment](https://docs.python.org/3/tutorial/venv.html)
     to run this example, but it's not required.
     Install and initialize the virtual environment with the "venv" module on Python 3 (you must install [virtualenv](https://pypi.python.org/pypi/virtualenv) for Python 2.7):
 
-    ```
+    ```shell
     python -m venv mytestenv # Might be "python3" or "py -3.6" depending on your Python installation
     cd mytestenv
     source bin/activate      # Linux shell (Bash, ZSH, etc.) only
@@ -31,33 +30,33 @@ This sample explains how you can create a VM in Python, with certificates instal
 
 1. Create a [service principal](https://docs.microsoft.com/en-us/azure/azure-stack/azure-stack-create-service-principals) to work against AzureStack. Make sure your service principal has [contributor/owner role](https://docs.microsoft.com/en-us/azure/azure-stack/azure-stack-create-service-principals#assign-role-to-service-principal) on your subscription.
 
-1.  Clone the repository.
+1. Clone the repository.
 
-    ```
+    ```shell
     git clone https://github.com/Azure-Samples/Hybrid-KeyVault-Python-Deploy-Certificates-To-VM.git
     ```
 
-1.  Install the dependencies using pip.
+1. Install the dependencies using pip.
 
-    ```
+    ```shell
     cd Hybrid-KeyVault-Python-Deploy-Certificates-To-VM
     pip install -r requirements.txt
     ```
 
 1. Export these environment variables into your current shell or update the credentials in the example file.
 
-    ```
+    ```shell
     export AZURE_TENANT_ID={your tenant id}
     export AZURE_CLIENT_ID={your client id}
     export AZURE_CLIENT_SECRET={your client secret}
     export AZURE_SUBSCRIPTION_ID={your subscription id}
-    export AZURE_RESOURCE_LOCATION={your azurestack resource location}
-    export ARM_ENDPOINT={your azure stack resource manager endpoint}
+    export AZURE_RESOURCE_LOCATION={your AzureStack resource location}
+    export ARM_ENDPOINT={your AzureStack resource manager endpoint}
     ```
 
 1. Run the sample.
 
-    ```
+    ```shell
     python example.py
     ```
 
@@ -110,11 +109,10 @@ For details about creation of these components, you can refer to the generic sam
 
 You can also find different example on how to create a Key Vault account:
 
-  - From CLI 2.0: https://docs.microsoft.com/azure/key-vault/key-vault-manage-with-cli2
-  - From Python SDK: https://github.com/Azure-Samples/Hybrid-KeyVault-Python-Manage-Secrets
+- From CLI 2.0: https://docs.microsoft.com/azure/key-vault/key-vault-manage-with-cli2
+- From Python SDK: https://github.com/Azure-Samples/Hybrid-KeyVault-Python-Manage-Secrets
 
-> In order to execute this sample, your Key Vault account MUST have the "enabled-for-deployment" special permission.
-  The EnabledForDeployment flag explicitly gives Azure (Microsoft.Compute resource provider) permission to use the certificates stored as secrets for this deployment.
+> In order to execute this sample, your Key Vault account MUST have the "enabled-for-deployment" special permission. The EnabledForDeployment flag explicitly gives Azure (Microsoft.Compute resource provider) permission to use the certificates stored as secrets for this deployment.
 
 > Note that access policy takes an *object_id*, not a client_id as parameter. This samples also provide a quick way to convert a Service Principal client_id to an object_id using the `azure-graphrbac` client.
 
@@ -130,7 +128,6 @@ In Azure Stack, you need to store the certificate as a secret. Follow the steps 
         vault.properties.vault_uri, certificate_name, cert_value)
 
 ```
-
 
 ### Create a VM with Certificates from Key Vault
 
@@ -175,7 +172,6 @@ vm_poller = compute_client.virtual_machines.create_or_update(
 )
 vm_result = vm_poller.result()
 ```
-
 
 ## Resources
 

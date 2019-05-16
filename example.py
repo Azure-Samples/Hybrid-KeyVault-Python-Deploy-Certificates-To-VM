@@ -75,7 +75,7 @@ def run_example():
     # Create the following RP Clients with an Application (service principal) token provider
     #
 
-    KnownProfiles.default.use(KnownProfiles.v2018_03_01_hybrid)
+    KnownProfiles.default.use(KnownProfiles.v2019_03_01_hybrid)
 
     credentials, subscription_id, mystack_cloud = get_credentials()
     resource_client = ResourceManagementClient(credentials, subscription_id,
@@ -135,7 +135,7 @@ def run_example():
     )
     print_item(vault)
 
-    # KeyVault recommentation is to wait 20 seconds after account creation for DNS update
+    # KeyVault recommendation is to wait 20 seconds after account creation for DNS update
     time.sleep(20)
 
     # Create a certificate in the keyvault as a secret
