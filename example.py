@@ -29,7 +29,8 @@ GROUP_NAME = 'azure-kv-vm-certificate-sample-group'
 
 # KeyVault
 
-KV_NAME = HAIKUNATOR.haikunate() # Random name to avoid collision executing this sample
+# Random name to avoid collision executing this sample
+KV_NAME = HAIKUNATOR.haikunate()
 
 # Network
 
@@ -44,6 +45,7 @@ IP_CONFIG_NAME = 'azure-sample-ip-config'
 VM_NAME = 'azuretestvm'
 ADMIN_LOGIN = 'Foo12'
 ADMIN_PASSWORD = 'BaR@123' + GROUP_NAME
+
 
 def get_credentials():
     mystack_cloud = get_cloud_from_metadata_endpoint(
@@ -79,13 +81,13 @@ def run_example():
 
     credentials, subscription_id, mystack_cloud = get_credentials()
     resource_client = ResourceManagementClient(credentials, subscription_id,
-        base_url=mystack_cloud.endpoints.resource_manager)
+                                               base_url=mystack_cloud.endpoints.resource_manager)
     compute_client = ComputeManagementClient(credentials, subscription_id,
-        base_url=mystack_cloud.endpoints.resource_manager)
-    network_client = NetworkManagementClient(credentials, subscription_id, 
-        base_url=mystack_cloud.endpoints.resource_manager)
-    kv_mgmt_client = KeyVaultManagementClient(credentials, subscription_id, 
-        base_url=mystack_cloud.endpoints.resource_manager)
+                                             base_url=mystack_cloud.endpoints.resource_manager)
+    network_client = NetworkManagementClient(credentials, subscription_id,
+                                             base_url=mystack_cloud.endpoints.resource_manager)
+    kv_mgmt_client = KeyVaultManagementClient(credentials, subscription_id,
+                                              base_url=mystack_cloud.endpoints.resource_manager)
 
     kv_credentials = ServicePrincipalCredentials(
         client_id=os.environ['AZURE_CLIENT_ID'],
@@ -149,7 +151,7 @@ def run_example():
     certificate_as_secret = kv_client.get_secret(
         vault.properties.vault_uri,
         certificate_name,
-        "" # Latest version
+        ""  # Latest version
     )
     print_item(certificate_as_secret)
 
@@ -216,6 +218,7 @@ def run_example():
     delete_async_operation.wait()
     print("\nDeleted: {}".format(GROUP_NAME))
 
+
 def print_item(group):
     """Print a ResourceGroup instance."""
     if hasattr(group, 'name'):
@@ -225,12 +228,14 @@ def print_item(group):
         print("\tLocation: {}".format(group.location))
     print_properties(getattr(group, 'properties', None))
 
+
 def print_properties(props):
     """Print a ResourceGroup propertyies instance."""
     if props and hasattr(props, 'provisioning_state'):
         print("\tProperties:")
         print("\t\tProvisioning State: {}".format(props.provisioning_state))
     print("\n\n")
+
 
 def resolve_service_principal(identifier):
     """Get an object_id from a client_id.
@@ -246,12 +251,14 @@ def resolve_service_principal(identifier):
         os.environ['AZURE_TENANT_ID']
     )
 
-    result = list(graphrbac_client.service_principals.list(filter="servicePrincipalNames/any(c:c eq '{}')".format(identifier)))
+    result = list(graphrbac_client.service_principals.list(
+        filter="servicePrincipalNames/any(c:c eq '{}')".format(identifier)))
     if result:
         return result[0].object_id
     raise RuntimeError("Unable to get object_id from client_id")
 
 ###### Network creation, not specific to MSI scenario ######
+
 
 def create_virtual_network(network_client):
     """Usual VNet creation.
@@ -279,6 +286,7 @@ def create_virtual_network(network_client):
         SUBNET_NAME,
     )
 
+
 def create_public_ip(network_client):
     """Usual PublicIP creation.
     """
@@ -292,6 +300,7 @@ def create_public_ip(network_client):
         params_create,
     )
     return pip_poller.result()
+
 
 def create_network_interface(network_client, subnet, public_ip):
     """Usual create NIC.
@@ -316,10 +325,12 @@ def create_network_interface(network_client, subnet, public_ip):
 
 ###### VM creation, not specific to this scenario ######
 
+
 def get_hardware_profile():
     return {
         'vm_size': 'Standard_A0'
     }
+
 
 def get_network_profile(network_interface_id):
     return {
@@ -327,6 +338,7 @@ def get_network_profile(network_interface_id):
             'id': network_interface_id,
         }],
     }
+
 
 def get_storage_profile():
     return {
@@ -337,6 +349,7 @@ def get_storage_profile():
             'version': 'latest'
         }
     }
+
 
 if __name__ == "__main__":
     run_example()
