@@ -1,7 +1,11 @@
 ---
-services: Azure-Stack, virtual-machines, key-vault
-platforms: python
-author: viananth
+page_type: sample
+languages:
+- python
+products:
+- azure
+description: "This sample explains how you can create a VM in Python, with certificates installed automatically from a Key Vault account in Azure Stack."
+urlFragment: Hybrid-KeyVault-Python-Deploy-Certificates-To-VM
 ---
 
 # Hybrid-KeyVault-Python-Deploy-Certificates-To-VM
